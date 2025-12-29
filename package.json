@@ -1,0 +1,25 @@
+{
+    "name": "hotel-booking",
+    "version": "1.0.0",
+    "description": "Hotel booking application with client and server",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently \"npm run client\" \"npm run server\"",
+        "client": "cd client && npm run dev",
+        "server": "cd server && npm run server",
+        "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+        "build": "cd client && npm run build"
+    },
+    "keywords": [
+        "hotel",
+        "booking",
+        "react",
+        "express"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^9.1.2"
+    }
+}

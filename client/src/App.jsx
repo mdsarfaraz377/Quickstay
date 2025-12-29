@@ -12,25 +12,42 @@ import Layout from './pages/hotelOwner/Layout'
 import Dashboard from './pages/hotelOwner/Dashboard'
 import AddRoom from './pages/hotelOwner/AddRoom'
 import ListRoom from './pages/hotelOwner/ListRoom'
+import { Toaster } from 'react-hot-toast'
+import { useAppContext } from './context/AppContext'
 
 const App = () => {
-  const isOwnerPath = useLocation().pathname.includes("owner")
+  const location = useLocation();
+  const isOwnerPath = location.pathname.includes("owner");
+  const { showHotelReg } = useAppContext()
+
+  React.useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.replace('#', ''));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
   return (
     <div>
-      {!isOwnerPath && <Navbar/>}
-      {false && <HotelReg />}
+      <Toaster position="top-center" reverseOrder={false} />
+      {!isOwnerPath && <Navbar />}
+      {showHotelReg && <HotelReg />}
       <div className='min-h-[70vh]'>
-         <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/rooms' element={<AllRooms/>} />
-            <Route path='/rooms/:id' element={<RoomDetails/>} />
-            <Route path='/my-bookings' element={<MyBookings/>} />
-            <Route path='/owner' element={<Layout/>}>
-              <Route index element={<Dashboard/> } />
-              <Route path="add-room" element={<AddRoom /> } />
-              <Route path="list-room" element={<ListRoom />} />
-            </Route>
-         </Routes>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/rooms' element={<AllRooms />} />
+          <Route path='/rooms/:id' element={<RoomDetails />} />
+          <Route path='/my-bookings' element={<MyBookings />} />
+          <Route path='/owner' element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="add-room" element={<AddRoom />} />
+            <Route path="list-room" element={<ListRoom />} />
+          </Route>
+        </Routes>
       </div>
       <Footer />
     </div>
